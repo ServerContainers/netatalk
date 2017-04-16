@@ -45,7 +45,6 @@ else
   echo ">> CONTAINER: already initialized - direct start of netatalk"
 fi
 
-cat /etc/afp.conf
 ##
 # CMD
 ##
