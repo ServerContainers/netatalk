@@ -29,7 +29,8 @@ RUN export netatalk_version=3.1.11 \
  && tar xvf netatalk-${netatalk_version}.tar.gz \
  && rm netatalk-${netatalk_version}.tar.gz \
  && cd netatalk-${netatalk_version} \
- && ./configure --prefix=/ \
+ \
+ && ./configure --prefix= \
 		--enable-debian-systemd \
 		--enable-krbV-uam \
 		--disable-zeroconf \
@@ -48,10 +49,18 @@ RUN export netatalk_version=3.1.11 \
 		--deldoc=yes \
 		--default \
 		--fstrans=no \
+ \
  && cd - \
  && rm -rf netatalk-${netatalk_version} \
- && sed -i 's/\[Global\]/[Global]\n  afp interfaces = eth0\n  log file = \/dev\/stdout\n  log level = default:warn\n  zeroconf = no/g' /etc/afp.conf
+ && sed -i 's/\[Global\]/[Global]\n  afp interfaces = eth0\n  log file = \/dev\/stdout\n  zeroconf = no/g' /etc/afp.conf \
+ && echo "" >> /etc/afp.conf
 
+VOLUME ["/shares"]
 EXPOSE 548
 
-CMD [ "/sbin/netatalk", "-d", "-F", "/etc/afp.conf" ]
+COPY scripts /usr/local/bin/
+
+HEALTHCHECK CMD ["docker-healthcheck.sh"]
+ENTRYPOINT ["entrypoint.sh"]
+
+CMD [ "netatalk", "-d", "-F", "/etc/afp.conf" ]

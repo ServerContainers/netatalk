@@ -6,6 +6,26 @@
 # Source Code
 Check the following link for a new version: https://sourceforge.net/projects/netatalk/files/netatalk
 
+## Environment variables and defaults
+
+### Netatalk
+
+* __ACCOUNT\_username__
+    * multiple variables/accounts possible
+    * adds a new user account with the given username and the env value as password
+
+to enable authentication add the following to your netatalk config:
+
+    auth_basic "Restricted Area"; auth_basic_user_file /conf/auth.htpasswd;
+
+* __NETATALK\_VOLUME\_CONFIG\_myconfigname__
+    * adds a new netatalk volume configuration
+    * multiple variables/confgurations possible by adding unique configname to NETATALK_VOLUME_CONFIG_
+    * take a look at http://netatalk.sourceforge.net/3.0/htmldocs/afp.conf.5.html -> EXPLANATION OF VOLUME PARAMETERS
+    * examples
+        * "[My Share]; path=/shares/myshare; valid users = alice; invalid users = bob;"
+        * "[TimeCapsule Bob]; path=/shares/tc-bob; valid users = bob; vol size limit = 100000; time machine = yes"
+
 # TimeMachine - Avahi / Zeroconf
 
 ## Infos:
@@ -22,15 +42,9 @@ After that just add a new service which fits to your config.
 
 __afp.conf__
 
-    ;
-    ; Netatalk 3.x configuration file
-    ;
-
     [Global]
-      mimic model = RackMac
-      zeroconf = yes
+      zeroconf = no
       log file = /dev/stdout
-      log level = default:warn
 
     [Time Capsule]
       path = /timecapsule
