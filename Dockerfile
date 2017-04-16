@@ -23,6 +23,7 @@ RUN export netatalk_version=3.1.11 \
                           libkrb5-dev \
  \
  && apt-get -q -y clean \
+ && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
  \
  && wget http://prdownloads.sourceforge.net/netatalk/netatalk-${netatalk_version}.tar.gz \
  && tar xvf netatalk-${netatalk_version}.tar.gz \
@@ -38,7 +39,7 @@ RUN export netatalk_version=3.1.11 \
 		--with-acls \
 		--with-dbus-sysconf-dir=/etc/dbus-1/system.d \
 		--with-init-style=debian-systemd \
-		--with-pam-confdir=/etc/pam.d && \
+		--with-pam-confdir=/etc/pam.d \
  && make \
  && checkinstall \
 		--pkgname=netatalk \
