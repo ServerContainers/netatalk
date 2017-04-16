@@ -14,9 +14,9 @@ Check the following link for a new version: https://sourceforge.net/projects/net
     * multiple variables/accounts possible
     * adds a new user account with the given username and the env value as password
 
-to enable authentication add the following to your netatalk config:
+to restrict access of volumes you can add the following to your netatalk volume config:
 
-    auth_basic "Restricted Area"; auth_basic_user_file /conf/auth.htpasswd;
+    valid users = alice; invalid users = bob;
 
 * __NETATALK\_VOLUME\_CONFIG\_myconfigname__
     * adds a new netatalk volume configuration
