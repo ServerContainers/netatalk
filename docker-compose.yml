@@ -1,0 +1,23 @@
+version: '3'
+ 
+services:
+  netatalk:
+    build: .
+    image: servercontainers/netatalk
+    restart: always
+    environment:
+      ACCOUNT_alice: alipass
+      ACCOUNT_bob: bobpass
+      NETATALK_VOLUME_CONFIG_aliceonly: "[Alice Share]; path=/shares/alice; valid users = alice"
+      NETATALK_VOLUME_CONFIG_bobstm: "[TimeCapsule Bob]; path=/shares/timemachine; valid users = bob; vol size limit = 100000; time machine = yes"
+    volumes:
+      - ./shares/alice:/shares/alice
+      - ./shares/timemachine:/shares/timemachine
+    ports:
+      - 548:548
+    networks:
+      - netatalk
+ 
+networks:
+  netatalk:
+    driver: bridge

@@ -17,14 +17,14 @@ if [ ! -f "$INITALIZED" ]; then
   ##
   # USER ACCOUNTS
   ##
-  for I_ACCOUNT in $(env | grep '^ACCOUNT_')
+  for I_ACCOUNT in "$(env | grep '^ACCOUNT_')"
   do
     ACCOUNT_NAME=$(echo "$I_ACCOUNT" | cut -d'=' -f1 | sed 's/ACCOUNT_//g' | tr '[:upper:]' '[:lower:]')
-    ACCOUNT_PASSWORD=$(echo "$I_ACCOUNT" | cut -d'=' -f2)
+    ACCOUNT_PASSWORD=$(echo "$I_ACCOUNT" | sed 's/^[^=]*=//g')
 
     echo ">> ACCOUNT: adding account: $ACCOUNT_NAME"
     useradd -M -s /bin/false "$ACCOUNT_NAME"
-    echo -e "$ACCOUNT_PASSWORD\n$ACCOUNT_PASSWORD" | passwd "$ACCOUNT_NAME"
+    echo "$ACCOUNT_PASSWORD\n$ACCOUNT_PASSWORD" | passwd "$ACCOUNT_NAME"
 
     unset $(echo "$I_ACCOUNT" | cut -d'=' -f1)
   done
@@ -32,10 +32,9 @@ if [ ! -f "$INITALIZED" ]; then
   ##
   # Netatalk Vonlume Config ENVs
   ##
-  for I_CONF in $(env | grep '^NETATALK_VOLUME_CONFIG_')
+  for I_CONF in "$(env | grep '^NETATALK_VOLUME_CONFIG_')"
   do
-    CONF_CONF_NAME=$(echo "$I_CONF" | cut -d'=' -f1 | sed 's/NETATALK_VOLUME_CONFIG_//g' | tr '[:upper:]' '[:lower:]')
-    CONF_CONF_VALUE=$(echo "$I_CONF" | cut -d'=' -f2)
+    CONF_CONF_VALUE=$(echo "$I_CONF" | sed 's/^[^=]*=//g')
 
     echo "$CONF_CONF_VALUE" | sed 's/;/\n/g' >> /etc/afp.conf
     echo "" >> /etc/afp.conf
@@ -46,6 +45,7 @@ else
   echo ">> CONTAINER: already initialized - direct start of netatalk"
 fi
 
+cat /etc/afp.conf
 ##
 # CMD
 ##
