@@ -1,5 +1,5 @@
 # netatalk
-3.1.11 netatalk - freshly complied from official stable releases on debian:jessie
+netatalk - freshly complied from official stable releases on debian:jessie
 
 # Source Code
 Check the following link for a new version: https://sourceforge.net/projects/netatalk/files/netatalk
