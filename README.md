@@ -1,5 +1,3 @@
-# still under construction
-
 # netatalk
 3.1.11 netatalk - freshly complied from official stable releases on debian:jessie
 
