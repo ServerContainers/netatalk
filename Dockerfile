@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM debian:stretch
 
 RUN export netatalk_version=3.1.11 \
  && export DEBIAN_FRONTEND=noninteractive \
