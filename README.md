@@ -1,11 +1,11 @@
-# deprecation warning
+# Info
 
-_Note: This Repository is deprecated since apple announced to no longer use the afp protocol and instead switched to smb. But you might still want to use this repository with old MacOS X versions._
-
-_If you are looking for a TimeMachine Container take a look at my SAMBA Container which should be a better choice: https://github.com/ServerContainers/samba_
+this repository was deprecated in the past. I reenabled it because samba has some troubles with timemachine backups.
+So for TimeMachine I can recommend using this container. If you want simple filesharing I'd recommend samba, webdav or other stuff.
+Apple themself announced to deprecate afp over samba.
 
 # netatalk
-netatalk - freshly complied from official stable releases on debian:jessie
+netatalk - freshly complied from official stable releases on debian:stretch
 
 # Source Code
 Check the following link for a new version: https://sourceforge.net/projects/netatalk/files/netatalk
