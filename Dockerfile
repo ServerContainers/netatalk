@@ -1,6 +1,6 @@
 FROM debian:stretch
 
-RUN export netatalk_version=3.1.11 \
+RUN export netatalk_version=3.1.12 \
  && export DEBIAN_FRONTEND=noninteractive \
  \
  && apt-get -q -y update \
@@ -33,7 +33,7 @@ RUN export netatalk_version=3.1.11 \
  && ./configure --prefix= \
 		--enable-debian-systemd \
 		--enable-krbV-uam \
-		--disable-zeroconf \
+		--enable-zeroconf \
 		--enable-krbV-uam \
 		--enable-tcp-wrappers \
 		--with-cracklib \
@@ -52,7 +52,7 @@ RUN export netatalk_version=3.1.11 \
  \
  && cd - \
  && rm -rf netatalk-${netatalk_version} \
- && sed -i 's/\[Global\]/[Global]\n  afp interfaces = eth0\n  log file = \/dev\/stdout\n  zeroconf = no/g' /etc/afp.conf \
+ && sed -i 's/\[Global\]/[Global]\n  afp interfaces = eth0\n  log file = \/dev\/stdout\n  zeroconf = yes/g' /etc/afp.conf \
  && echo "" >> /etc/afp.conf
 
 VOLUME ["/shares"]
