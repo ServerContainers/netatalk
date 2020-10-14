@@ -14,13 +14,12 @@ Check the following link for a new version: https://sourceforge.net/projects/net
 
 ### Netatalk
 
-* __INTERFACE__
-    * _default: eth0_
-    * set to any interface name you want to listen to
-    * multiple interfaces possible (same configuration as `afp interfaces` of `netatalk.conf`)
-
 * __DISABLE\_ZEROCONF__
     * set to any value to disable zeroconf
+
+* __ZEROCONF\_NAME__
+    * _default: AFP Docker Container_
+    * set to any name you want
 
 * __ACCOUNT\_username__
     * multiple variables/accounts possible

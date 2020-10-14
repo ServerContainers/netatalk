@@ -22,9 +22,10 @@ if [ ! -f "$INITALIZED" ]; then
     sed -i 's/zeroconf = yes/zeroconf = no/g' /etc/afp.conf
   fi
 
-  if [ ! -z ${INTERFACE+x} ]; then
-    echo ">> listen on interface $INTERFACE..."
-    sed -i 's/eth0/'"$INTERFACE"'/g' /etc/afp.conf
+  cp /container/config/avahi/afpd.service /etc/avahi/services/afpd.service
+  if [ ! -z ${ZEROCONF_NAME+x} ]; then
+    echo ">> set zeroconf name to $ZEROCONF_NAME..."
+    sed -i 's/AFP Docker Container/'"$ZEROCONF_NAME"'/g' /etc/avahi/services/afpd.service
   fi
 
   ##

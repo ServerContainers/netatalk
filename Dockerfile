@@ -55,7 +55,7 @@ RUN export netatalk_version=3.1.12 \
  \
  && cd - \
  && rm -rf netatalk-${netatalk_version} \
- && sed -i 's/\[Global\]/[Global]\n  afp interfaces = eth0\n  log file = \/dev\/stdout\n  zeroconf = yes/g' /etc/afp.conf \
+ && sed -i 's/\[Global\]/[Global]\n  log file = \/dev\/stdout\n  zeroconf = yes/g' /etc/afp.conf \
  && echo "" >> /etc/afp.conf
 
 VOLUME ["/shares"]
