@@ -23,7 +23,7 @@ if [ ! -f "$INITALIZED" ]; then
   do
     CONF_CONF_VALUE=$(echo "$I_CONF" | sed 's/^[^=]*=//g')
     echo ">> global config - adding: '$CONF_CONF_VALUE' to /etc/afp.conf"
-    sed -i '/\[Global\]/a'"$CONF_CONF_VALUE" /etc/afp.conf
+    sed -i '/\[Global\]/a  '"$CONF_CONF_VALUE" /etc/afp.conf
   done
 
   ##
