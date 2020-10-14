@@ -1,2 +1,2 @@
 #!/bin/sh
-exec avahi-daemon --daemonize --no-drop-root
+exec avahi-daemon --no-drop-root
