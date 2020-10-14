@@ -1,0 +1,2 @@
+#!/bin/sh
+exec netatalk -d -F /etc/afp.conf

@@ -7,6 +7,8 @@ RUN export netatalk_version=3.1.12 \
  && apt-get -q -y install build-essential \
                           wget \
  && apt-get -q -y install pkg-config \
+                          runit \
+                          avahi-daemon \
                           checkinstall \
                           automake \
                           libtool \
@@ -21,6 +23,7 @@ RUN export netatalk_version=3.1.12 \
                           libgcrypt11-dev \
                           libtdb-dev \
                           libkrb5-dev \
+                          libavahi-client-dev \
  \
  && apt-get -q -y clean \
  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
@@ -58,9 +61,9 @@ RUN export netatalk_version=3.1.12 \
 VOLUME ["/shares"]
 EXPOSE 548
 
-COPY scripts /usr/local/bin/
+COPY . /container/
 
-HEALTHCHECK CMD ["docker-healthcheck.sh"]
-ENTRYPOINT ["entrypoint.sh"]
+HEALTHCHECK CMD ["/container/scripts/docker-healthcheck.sh"]
+ENTRYPOINT ["/container/scripts/entrypoint.sh"]
 
-CMD [ "netatalk", "-d", "-F", "/etc/afp.conf" ]
+CMD [ "runsvdir","-P", "/container/config/runit" ]
