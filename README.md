@@ -5,7 +5,7 @@ So for TimeMachine I can recommend using this container. If you want simple file
 Apple announced to deprecate afp and move to samba.
 
 # netatalk
-netatalk - freshly complied from official stable releases on debian:stretch
+netatalk - freshly complied from official stable releases on debian:buster
 
 # Source Code
 Check the following link for a new version: https://sourceforge.net/projects/netatalk/files/netatalk
