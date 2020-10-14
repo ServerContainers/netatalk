@@ -34,7 +34,7 @@ to restrict access of volumes you can add the following to your netatalk volume 
         * "[My Share]; path=/shares/myshare; valid users = alice; invalid users = bob;"
         * "[TimeCapsule Bob]; path=/shares/tc-bob; valid users = bob; vol size limit = 100000; time machine = yes"
 
-# TimeMachine - Avahi / Zeroconf
+# TimeMachine - Avahi / Zeroconf (no longer required - only info)
 
 ## Using dockers internal network and avahi zeroconf from outside the docker network
 
@@ -51,7 +51,7 @@ After that just add a new service which fits to your config.
 __afp.conf__
 
     [Global]
-      zeroconf = no
+      zeroconf = yes
       log file = /dev/stdout
 
     [Time Capsule]
