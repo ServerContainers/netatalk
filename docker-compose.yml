@@ -7,8 +7,11 @@ services:
     restart: always
     network_mode: host
     environment:
+      NETATALK_GLOBAL_CONFIG_1: 'mimic model = RackMac'
+
       ACCOUNT_alice: alipass
       ACCOUNT_bob: bobpass
+
       NETATALK_VOLUME_CONFIG_aliceonly: "[Alice Share]; path=/shares/alice; valid users = alice"
       NETATALK_VOLUME_CONFIG_bobstm: "[TimeCapsule]; path=/shares/timemachine; valid users = bob; vol size limit = 100000; time machine = yes"
     volumes:

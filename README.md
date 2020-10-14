@@ -14,12 +14,9 @@ Check the following link for a new version: https://sourceforge.net/projects/net
 
 ### Netatalk
 
-* __DISABLE\_ZEROCONF__
-    * set to any value to disable zeroconf
-
-* __ZEROCONF\_NAME__
-    * _default: AFP Docker Container_
-    * set to any name you want
+*  __NETATALK\_GLOBAL\_CONFIG\_someuniquevalue__
+    * add any global netatalk config to `afp.conf`
+    * example value: `mimic model = RackMac`
 
 * __ACCOUNT\_username__
     * multiple variables/accounts possible

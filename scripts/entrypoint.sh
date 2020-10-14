@@ -17,18 +17,14 @@ if [ ! -f "$INITALIZED" ]; then
   echo ">> CONTAINER: starting initialisation"
 
   ##
-  # GENERAL CONFIGURATION
+  # GLOBAL CONFIGURATION
   ##
-  if [ ! -z ${DISABLE_ZEROCONF+x} ]; then
-    echo ">> disable zeroconf..."
-    sed -i 's/zeroconf = yes/zeroconf = no/g' /etc/afp.conf
-  fi
-
-  cp /container/config/avahi/afpd.service /etc/avahi/services/afpd.service
-  if [ ! -z ${ZEROCONF_NAME+x} ]; then
-    echo ">> set zeroconf name to $ZEROCONF_NAME..."
-    sed -i 's/AFP Docker Container/'"$ZEROCONF_NAME"'/g' /etc/avahi/services/afpd.service
-  fi
+  for I_CONF in $(env | grep '^NETATALK_GLOBAL_CONFIG_')
+  do
+    CONF_CONF_VALUE=$(echo "$I_CONF" | sed 's/^[^=]*=//g')
+    echo ">> global config - adding: $CONF_CONF_VALUE to /etc/afp.conf"
+    sed -i '/\[Global\]/a'"$CONF_CONF_VALUE" /etc/afp.conf
+  done
 
   ##
   # USER ACCOUNTS
