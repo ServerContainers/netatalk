@@ -3,6 +3,8 @@ FROM debian:buster
 RUN export netatalk_version=3.1.12 \
  && export DEBIAN_FRONTEND=noninteractive \
  \
+ && echo 'deb http://deb.debian.org/debian buster-backports main' >> /etc/apt/sources.list \
+ \
  && apt-get -q -y update \
  && apt-get -q -y install build-essential \
                           wget \
