@@ -33,7 +33,7 @@ if [ ! -f "$INITALIZED" ]; then
   ##
   # USER ACCOUNTS
   ##
-  for I_ACCOUNT in "$(env | grep '^ACCOUNT_')"
+  for I_ACCOUNT in $(env | grep '^ACCOUNT_')
   do
     ACCOUNT_NAME=$(echo "$I_ACCOUNT" | cut -d'=' -f1 | sed 's/ACCOUNT_//g' | tr '[:upper:]' '[:lower:]')
     ACCOUNT_PASSWORD=$(echo "$I_ACCOUNT" | sed 's/^[^=]*=//g')
@@ -48,7 +48,7 @@ if [ ! -f "$INITALIZED" ]; then
   ##
   # Netatalk Vonlume Config ENVs
   ##
-  for I_CONF in "$(env | grep '^NETATALK_VOLUME_CONFIG_')"
+  for I_CONF in $(env | grep '^NETATALK_VOLUME_CONFIG_')
   do
     CONF_CONF_VALUE=$(echo "$I_CONF" | sed 's/^[^=]*=//g')
 
