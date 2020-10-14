@@ -22,7 +22,7 @@ if [ ! -f "$INITALIZED" ]; then
   for I_CONF in $(env | grep '^NETATALK_GLOBAL_CONFIG_')
   do
     CONF_CONF_VALUE=$(echo "$I_CONF" | sed 's/^[^=]*=//g')
-    echo ">> global config - adding: $CONF_CONF_VALUE to /etc/afp.conf"
+    echo ">> global config - adding: '$CONF_CONF_VALUE' to /etc/afp.conf"
     sed -i '/\[Global\]/a'"$CONF_CONF_VALUE" /etc/afp.conf
   done
 
