@@ -1,4 +1,4 @@
-FROM debian:stretch
+FROM debian:buster
 
 RUN export netatalk_version=3.1.12 \
  && export DEBIAN_FRONTEND=noninteractive \
