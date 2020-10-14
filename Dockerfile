@@ -9,6 +9,7 @@ RUN export netatalk_version=3.1.12 \
  && apt-get -q -y install build-essential \
                           wget \
  && apt-get -q -y install pkg-config \
+                          procps \
                           runit \
                           avahi-daemon \
                           checkinstall \
