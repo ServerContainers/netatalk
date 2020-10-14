@@ -20,7 +20,7 @@ RUN export netatalk_version=3.1.12 \
                           libdb-dev \
                           libacl1-dev \
                           libdb5.3-dev \
-                          libgcrypt11-dev \
+                          libgcrypt20-dev \
                           libtdb-dev \
                           libkrb5-dev \
                           libavahi-client-dev \
