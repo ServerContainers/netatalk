@@ -15,6 +15,19 @@ if [ ! -f "$INITALIZED" ]; then
   echo ">> CONTAINER: starting initialisation"
 
   ##
+  # GENERAL CONFIGURATION
+  ##
+  if [ ! -z ${DISABLE_ZEROCONF+x} ]; then
+    echo ">> disable zeroconf..."
+    sed -i 's/zeroconf = yes/zeroconf = no/g' /etc/afp.conf
+  fi
+
+  if [ ! -z ${INTERFACE+x} ]; then
+    echo ">> listen on interface $INTERFACE..."
+    sed -i 's/eth0/'"$INTERFACE"'/g' /etc/afp.conf
+  fi
+
+  ##
   # USER ACCOUNTS
   ##
   for I_ACCOUNT in "$(env | grep '^ACCOUNT_')"

@@ -14,6 +14,14 @@ Check the following link for a new version: https://sourceforge.net/projects/net
 
 ### Netatalk
 
+* __INTERFACE__
+    * _default: eth0_
+    * set to any interface name you want to listen to
+    * multiple interfaces possible (same configuration as `afp interfaces` of `netatalk.conf`)
+
+* __DISABLE\_ZEROCONF__
+    * set to any value to disable zeroconf
+
 * __ACCOUNT\_username__
     * multiple variables/accounts possible
     * adds a new user account with the given username and the env value as password
@@ -32,7 +40,7 @@ to restrict access of volumes you can add the following to your netatalk volume 
 
 # TimeMachine - Avahi / Zeroconf
 
-## Infos:
+## Using dockers internal network and avahi zeroconf from outside the docker network
 
 * https://linux.die.net/man/5/avahi.service
 * http://netatalk.sourceforge.net/wiki/index.php/Bonjour_record_adisk_adVF_values
