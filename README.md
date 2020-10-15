@@ -1,11 +1,15 @@
-# Info
-
-this repository was deprecated in the past. I reenabled it because samba has some troubles with timemachine backups.
-So for TimeMachine I can recommend using this container. If you want simple filesharing I'd recommend samba, webdav or other stuff.
-Apple announced to deprecate afp and move to samba.
-
 # netatalk - (servercontainers/netatalk) [x86 + arm]
 netatalk - freshly complied from official stable releases on debian:buster
+
+* 2020-10-15
+    * complete rework and multi arch builds
+
+## Info
+
+So for TimeMachine I can recommend using this container. If you want simple filesharing I'd recommend samba, webdav or other stuff.
+
+Apple announced to deprecate afp and move to samba.
+
 
 # Source Code
 Check the following link for a new version: https://sourceforge.net/projects/netatalk/files/netatalk
