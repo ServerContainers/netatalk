@@ -68,7 +68,7 @@ if [ ! -f "$INITALIZED" ]; then
 
         NUMBER=$(env | grep time\ machine | grep -n "$VOL_PATH" | grep "\[$VOL_NAME\]" | sed 's/^\([0-9]*\):.*/\1/g' | head -n1)
 
-        sed -i ',</service-group>,d' /etc/avahi/services/afp.service
+        sed -i 's,</service-group>,,g' /etc/avahi/services/afp.service
         echo '
   <service>
    <type>_device-info._tcp</type>
