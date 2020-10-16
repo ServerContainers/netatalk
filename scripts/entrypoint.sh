@@ -16,6 +16,9 @@ INITALIZED="/.initialized"
 if [ ! -f "$INITALIZED" ]; then
   echo ">> CONTAINER: starting initialisation"
 
+  rm -vf /etc/avahi/services/*
+  cp /container/config/avahi/afp.service /etc/avahi/services/
+
   ##
   # GLOBAL CONFIGURATION
   ##
