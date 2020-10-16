@@ -6,6 +6,7 @@ netatalk on alpine
     * port from debian to alpine (debian version is available as tag)
     * way smaller now
     * no compiling
+    * added timemachine and zeroconf support
 * 2020-10-15
     * complete rework and multi arch builds
 
