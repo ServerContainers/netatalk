@@ -53,6 +53,8 @@ if [ ! -f "$INITALIZED" ]; then
     # if time machine volume
     if echo "$CONF_CONF_VALUE" | sed 's/;/\n/g' | grep time\ machine | grep yes 2>/dev/null >/dev/null;
     then
+        sed -i 's,</service-group>,,g' /etc/avahi/services/afp.service
+
         VOL_NAME=$(echo "$CONF_CONF_VALUE" | sed 's/.*\[\(.*\)\].*/\1/g')
         VOL_PATH=$(echo "$CONF_CONF_VALUE" | tr ';' '\n' | grep path | sed 's/.*= *//g')
         echo ">> TIMEMACHINE: adding volume to zeroconf: $VOL_NAME"
@@ -66,15 +68,20 @@ if [ ! -f "$INITALIZED" ]; then
 
         env | grep mimic 2>/dev/null >/dev/null && MODEL=$(env | grep mimic | sed 's/.*model *= *//g') || MODEL="TimeCapsule"
 
-        NUMBER=$(env | grep time\ machine | grep -n "$VOL_PATH" | grep "\[$VOL_NAME\]" | sed 's/^\([0-9]*\):.*/\1/g' | head -n1)
-
-        sed -i 's,</service-group>,,g' /etc/avahi/services/afp.service
-        echo '
+        if ! grep '<txt-record>model=' /etc/avahi/services/afp.service 2> /dev/null >/dev/null;
+        then
+          echo ">> TIMEMACHINE: zeroconf model: $MODEL"
+          echo '
   <service>
    <type>_device-info._tcp</type>
    <port>0</port>
    <txt-record>model='"$MODEL"'</txt-record>
-  </service>
+  </service>' >> /etc/avahi/services/afp.service
+        fi
+
+        NUMBER=$(env | grep time\ machine | grep -n "$VOL_PATH" | grep "\[$VOL_NAME\]" | sed 's/^\([0-9]*\):.*/\1/g' | head -n1)
+
+        echo '
   <service>
    <type>_adisk._tcp</type>
    <port>9</port>
