@@ -85,3 +85,4 @@ __/etc/avahi/services/afdp.service__
             <txt-record>model=RackMac</txt-record>
         </service>
     </service-group>
+
