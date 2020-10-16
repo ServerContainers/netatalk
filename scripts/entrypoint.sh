@@ -66,7 +66,7 @@ if [ ! -f "$INITALIZED" ]; then
 
         env | grep mimic 2>/dev/null >/dev/null && MODEL=$(env | grep mimic | sed 's/.*model *= *//g') || MODEL="TimeCapsule"
 
-        NUMBER=$(env | grep time\ machine | grep -n "$VOL_PATH" | grep "$VOL_NAME" | sed 's/^\([0-9]*\):.*/\1/g')
+        NUMBER=$(env | grep time\ machine | grep -n "$VOL_PATH" | grep "\[$VOL_NAME\]" | sed 's/^\([0-9]*\):.*/\1/g' | head -n1)
 
         sed -i ',</service-group>,d' /etc/avahi/services/afp.service
         echo '
