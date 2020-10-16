@@ -53,7 +53,7 @@ if [ ! -f "$INITALIZED" ]; then
     # if time machine volume
     if echo "$CONF_CONF_VALUE" | sed 's/;/\n/g' | grep time\ machine | grep yes 2>/dev/null >/dev/null;
     then
-        sed -i 's,</service-group>,,g' /etc/avahi/services/afp.service
+        sed -i '/<\/service-group>/d' /etc/avahi/services/afp.service
 
         VOL_NAME=$(echo "$CONF_CONF_VALUE" | sed 's/.*\[\(.*\)\].*/\1/g')
         VOL_PATH=$(echo "$CONF_CONF_VALUE" | tr ';' '\n' | grep path | sed 's/.*= *//g')
