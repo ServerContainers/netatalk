@@ -51,7 +51,7 @@ if [ ! -f "$INITALIZED" ]; then
     CONF_CONF_VALUE=$(echo "$I_CONF" | sed 's/^[^=]*=//g')
 
     # if time machine volume
-    if echo "$CONF_CONF_VALUE" | sed 's/;/\n/g' | grep time\ machine | grep yes 2>/dev/null >/dev/null;
+    if echo "$CONF_CONF_VALUE" | sed 's/;/\n/g' | grep time\ machine | grep yes 2>/dev/null >/dev/null && ! grep '_adisk._tcp' /etc/avahi/services/afp.service >/dev/null 2>/dev/null;
     then
         sed -i '/<\/service-group>/d' /etc/avahi/services/afp.service
 

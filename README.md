@@ -36,6 +36,7 @@ to restrict access of volumes you can add the following to your netatalk volume 
     * adds a new netatalk volume configuration
     * multiple variables/confgurations possible by adding unique configname to NETATALK_VOLUME_CONFIG_
     * take a look at http://netatalk.sourceforge.net/3.0/htmldocs/afp.conf.5.html -> EXPLANATION OF VOLUME PARAMETERS
+    * note only one `time machine = yes` is supported
     * examples
         * "[My Share]; path=/shares/myshare; valid users = alice; invalid users = bob;"
         * "[TimeCapsule Bob]; path=/shares/tc-bob; valid users = bob; vol size limit = 100000; time machine = yes"
