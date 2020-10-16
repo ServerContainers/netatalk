@@ -41,25 +41,22 @@ to restrict access of volumes you can add the following to your netatalk volume 
         * "[My Share]; path=/shares/myshare; valid users = alice; invalid users = bob;"
         * "[TimeCapsule Bob]; path=/shares/tc-bob; valid users = bob; vol size limit = 100000; time machine = yes"
 
-# TimeMachine - Avahi / Zeroconf 
+## Some helpful indepth informations about TimeMachine and Avahi / Zeroconf 
 
-## General Infos
+### General Infos
 
 - https://openwrt.org/docs/guide-user/services/nas/netatalk_configuration#zeroconf_advertising
-
 - http://netatalk.sourceforge.net/wiki/index.php/Bonjour_record_adisk_adVF_values
+- https://linux.die.net/man/5/avahi.service
 
-## Using dockers internal network and avahi zeroconf from outside the docker network
-
-* https://linux.die.net/man/5/avahi.service
-* http://netatalk.sourceforge.net/wiki/index.php/Bonjour_record_adisk_adVF_values
 
 You can't proxy the zeroconf inside the container to the outside, since this would need routing and forwarding to your internal docker0 interface from outside.
+So you need to use the `network=host` mode to enable zeroconf from within the container
 
 You can just expose the needed Port 548 to the docker hosts port and install avahi.
 After that just add a new service which fits to your config.
 
-### Example Configuration
+### Configuration Examples (automatically generated inside the container)
 
 __afp.conf__
 
@@ -76,7 +73,7 @@ __/etc/avahi/services/afdp.service__
     <?xml version="1.0" standalone='no'?><!--*-nxml-*-->
     <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
     <service-group>
-        <name replace-wildcards="yes">Time Capsule</name>
+        <name replace-wildcards="yes">%h</name>
         <service>
             <type>_afpovertcp._tcp</type>
             <port>548</port>
