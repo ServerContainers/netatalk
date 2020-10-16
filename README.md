@@ -1,7 +1,11 @@
 # netatalk - (servercontainers/netatalk) [x86 + arm]
 
-netatalk - freshly complied from official stable releases on debian:buster
+netatalk on alpine
 
+* 2020-10-16
+    * port from debian to alpine (debian version is available as tag)
+    * way smaller now
+    * no compiling
 * 2020-10-15
     * complete rework and multi arch builds
 
@@ -10,10 +14,6 @@ netatalk - freshly complied from official stable releases on debian:buster
 So for TimeMachine I can recommend using this container. If you want simple filesharing I'd recommend samba, webdav or other stuff.
 
 Apple announced to deprecate afp and move to samba.
-
-# Source Code
-
-Check the following link for a new version: https://sourceforge.net/projects/netatalk/files/netatalk
 
 ## Environment variables and defaults
 

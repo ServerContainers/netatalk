@@ -35,7 +35,7 @@ if [ ! -f "$INITALIZED" ]; then
     ACCOUNT_PASSWORD=$(echo "$I_ACCOUNT" | sed 's/^[^=]*=//g')
 
     echo ">> ACCOUNT: adding account: $ACCOUNT_NAME"
-    useradd -M -s /bin/false "$ACCOUNT_NAME"
+    adduser -H -s /bin/false "$ACCOUNT_NAME"
     echo -e "$ACCOUNT_PASSWORD\n$ACCOUNT_PASSWORD" | passwd "$ACCOUNT_NAME"
 
     unset $(echo "$I_ACCOUNT" | cut -d'=' -f1)
