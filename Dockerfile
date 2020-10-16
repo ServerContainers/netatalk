@@ -5,9 +5,10 @@ ENV PATH="/container/scripts:${PATH}"
 
 RUN apk add --no-cache runit \
                        bash \
-                       dbus \
                        avahi \
                        netatalk \
+ \
+ && sed -i 's/#enable-dbus=.*/enable-dbus=no/g' /etc/avahi/avahi-daemon.conf \
  \
  && sed -i 's/\[Global\]/[Global]\n  log file = \/dev\/stdout\n  zeroconf = yes/g' /etc/afp.conf \
  && echo "" >> /etc/afp.conf

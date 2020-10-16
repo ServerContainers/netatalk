@@ -1,3 +1,2 @@
 #!/bin/sh
-sleep 3
-exec avahi-daemon --no-drop-root
+exec avahi-daemon --no-rlimits
