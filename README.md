@@ -39,7 +39,13 @@ to restrict access of volumes you can add the following to your netatalk volume 
         * "[My Share]; path=/shares/myshare; valid users = alice; invalid users = bob;"
         * "[TimeCapsule Bob]; path=/shares/tc-bob; valid users = bob; vol size limit = 100000; time machine = yes"
 
-# TimeMachine - Avahi / Zeroconf (no longer required - only info)
+# TimeMachine - Avahi / Zeroconf 
+
+## General Infos
+
+- https://openwrt.org/docs/guide-user/services/nas/netatalk_configuration#zeroconf_advertising
+
+- http://netatalk.sourceforge.net/wiki/index.php/Bonjour_record_adisk_adVF_values
 
 ## Using dockers internal network and avahi zeroconf from outside the docker network
 

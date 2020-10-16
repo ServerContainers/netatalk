@@ -9,8 +9,9 @@ RUN apk add --no-cache runit \
                        netatalk \
  \
  && sed -i 's/#enable-dbus=.*/enable-dbus=no/g' /etc/avahi/avahi-daemon.conf \
+ && rm -vf /etc/avahi/services/* \
  \
- && sed -i 's/\[Global\]/[Global]\n  log file = \/dev\/stdout\n  zeroconf = yes/g' /etc/afp.conf \
+ ; sed -i 's/\[Global\]/[Global]\n  log file = \/dev\/stdout/g' /etc/afp.conf \
  && echo "" >> /etc/afp.conf
 
 VOLUME ["/shares"]

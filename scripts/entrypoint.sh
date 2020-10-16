@@ -16,8 +16,7 @@ INITALIZED="/.initialized"
 if [ ! -f "$INITALIZED" ]; then
   echo ">> CONTAINER: starting initialisation"
 
-  rm -vf /etc/avahi/services/*
-  cp /container/config/avahi/afp.service /etc/avahi/services/
+  cp /container/config/avahi/afp.service /etc/avahi/services/afp.service
 
   ##
   # GLOBAL CONFIGURATION
@@ -45,15 +44,55 @@ if [ ! -f "$INITALIZED" ]; then
   done
 
   ##
-  # Netatalk Vonlume Config ENVs
+  # Netatalk Volume Config ENVs
   ##
   for I_CONF in $(env | grep '^NETATALK_VOLUME_CONFIG_')
   do
     CONF_CONF_VALUE=$(echo "$I_CONF" | sed 's/^[^=]*=//g')
 
+    # if time machine volume
+    if echo "$CONF_CONF_VALUE" | sed 's/;/\n/g' | grep time\ machine | grep yes 2>/dev/null >/dev/null;
+    then
+        VOL_NAME=$(echo "$CONF_CONF_VALUE" | sed 's/.*\[\(.*\)\].*/\1/g')
+        VOL_PATH=$(echo "$CONF_CONF_VALUE" | tr ';' '\n' | grep path | sed 's/.*= *//g')
+        echo ">> TIMEMACHINE: adding volume to zeroconf: $VOL_NAME"
+        if [ ! -f "$VOL_PATH/.netatalk-volume-uuid" ]
+        then
+          UUID=$(cat /proc/sys/kernel/random/uuid)
+          echo "$UUID" > "$VOL_PATH/.netatalk-volume-uuid"
+          echo ">> TIMEMACHINE: creating new random uuid: $UUID"
+        fi
+        UUID=$(cat "$VOL_PATH/.netatalk-volume-uuid")
+
+        env | grep mimic 2>/dev/null >/dev/null && MODEL=$(env | grep mimic | sed 's/.*model *= *//g') || MODEL="TimeCapsule"
+
+        NUMBER=$(env | grep time\ machine | grep -n "$VOL_PATH" | grep "$VOL_NAME" | sed 's/^\([0-9]*\):.*/\1/g')
+
+        sed -i ',</service-group>,d' /etc/avahi/services/afp.service
+        echo '
+  <service>
+   <type>_device-info._tcp</type>
+   <port>0</port>
+   <txt-record>model='"$MODEL"'</txt-record>
+  </service>
+  <service>
+   <type>_adisk._tcp</type>
+   <port>9</port>
+   <txt-record>sys=waMa=0,adVF=0x100,adVU='"$UUID"'</txt-record>
+   <txt-record>dk'"$NUMBER"'=adVN='"$VOL_NAME"',adVF=0x81</txt-record>
+  </service>
+</service-group>' >> /etc/avahi/services/afp.service
+    fi
+
     echo "$CONF_CONF_VALUE" | sed 's/;/\n/g' >> /etc/afp.conf
     echo "" >> /etc/afp.conf
+
   done
+
+  echo ">> ZEROCONF: afp.service file"
+  echo "############################### START ####################################"
+  cat /etc/avahi/services/afp.service
+  echo "################################ END #####################################"
 
   touch "$INITALIZED"
 else
