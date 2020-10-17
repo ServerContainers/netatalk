@@ -101,6 +101,17 @@ if [ ! -f "$INITALIZED" ]; then
   cat /etc/avahi/services/afp.service
   echo "################################ END #####################################"
 
+  if [ ! -f "/external/avahi/not-mounted" ]
+  then
+    echo ">> EXTERNAL AVAHI: found external avahi, now maintaining avahi service file 'afp.service'"
+    echo ">> EXTERNAL AVAHI: internal avahi gets disabled"
+    rm -rf /container/config/runit/avahi
+    cp /etc/avahi/services/afp.service /external/avahi/afp.service
+    chmod a+rw /external/avahi/afp.service
+    echo ">> EXTERNAL AVAHI: list of services"
+    ls -l /external/avahi/*.service
+  fi
+
   touch "$INITALIZED"
 else
   echo ">> CONTAINER: already initialized - direct start of netatalk"

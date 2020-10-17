@@ -2,6 +2,10 @@
 
 netatalk on alpine
 
+## Changelogs
+
+* 2020-10-17
+    * support for external avahi (on docker host)
 * 2020-10-16
     * port from debian to alpine (debian version is available as tag)
     * way smaller now
@@ -40,6 +44,18 @@ to restrict access of volumes you can add the following to your netatalk volume 
     * examples
         * "[My Share]; path=/shares/myshare; valid users = alice; invalid users = bob;"
         * "[TimeCapsule Bob]; path=/shares/tc-bob; valid users = bob; vol size limit = 100000; time machine = yes"
+
+### Volumes
+
+* __your shares__
+    * by default I recommend mounting all shares beneath `/shares` and configure them using the `path` property
+    * the file `.netatalk-volume-uuid` gets created and should not be removed - especially on timemachine volumes it stores the uuid of the volume
+
+* __/external/avahi__
+    * mount your avahi service folder e.g. `/etc/avahi/services/` to this spot
+    * the container now maintains the service file `afp.service` for you - __it will be overwritten!__
+    * when mounted, the internal avahi daemon will be disabled
+
 
 ## Some helpful indepth informations about TimeMachine and Avahi / Zeroconf 
 

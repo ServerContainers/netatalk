@@ -12,7 +12,10 @@ RUN apk add --no-cache runit \
  && rm -vf /etc/avahi/services/* \
  \
  ; sed -i 's/\[Global\]/[Global]\n  log file = \/dev\/stdout/g' /etc/afp.conf \
- && echo "" >> /etc/afp.conf
+ && echo "" >> /etc/afp.conf \
+ \
+ mkdir -p /external/avahi \
+ && touch /external/avahi/not-mounted
 
 VOLUME ["/shares"]
 EXPOSE 548
