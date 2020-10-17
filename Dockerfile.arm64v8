@@ -22,7 +22,7 @@ RUN apk add --no-cache runit \
  ; sed -i 's/\[Global\]/[Global]\n  log file = \/dev\/stdout/g' /etc/afp.conf \
  && echo "" >> /etc/afp.conf \
  \
- mkdir -p /external/avahi \
+ && mkdir -p /external/avahi \
  && touch /external/avahi/not-mounted
 
 
