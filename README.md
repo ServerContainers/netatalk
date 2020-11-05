@@ -29,14 +29,13 @@ Apple announced to deprecate afp and move to samba.
 *  __NETATALK\_GLOBAL\_CONFIG\_someuniquevalue__
     * add any global netatalk config to `afp.conf`
     * example value: `mimic model = RackMac`
+        * some available options for `mimic model` are Xserve, PowerBook, PowerMac, Macmini, iMac, MacBook, MacBookPro, MacBookAir, MacPro, MacPro6,1, TimeCapsule, AppleTV1,1 and AirPort.
 
 * __ACCOUNT\_username__
     * multiple variables/accounts possible
     * adds a new user account with the given username and the env value as password
-
-to restrict access of volumes you can add the following to your netatalk volume config:
-
-    valid users = alice; invalid users = bob;
+    * to restrict access of volumes you can add the following to your samba volume config:
+        * `valid users = alice; invalid users = bob;`
 
 * __NETATALK\_VOLUME\_CONFIG\_myconfigname__
     * adds a new netatalk volume configuration
