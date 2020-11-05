@@ -4,6 +4,8 @@ netatalk on alpine
 
 ## Changelogs
 
+* 2020-11-05
+    * fixed multiarch build
 * 2020-10-17
     * support for external avahi (on docker host)
 * 2020-10-16
