@@ -6,6 +6,7 @@ netatalk on alpine
 
 * 2020-11-08
     * custom avahi service name
+    * specify avahi model name similar to `servercontainers/samba` config
 * 2020-11-05
     * fixed multiarch build
 * 2020-10-17
@@ -30,8 +31,7 @@ Apple announced to deprecate afp and move to samba.
 
 *  __NETATALK\_GLOBAL\_CONFIG\_someuniquevalue__
     * add any global netatalk config to `afp.conf`
-    * example value: `mimic model = RackMac`
-        * some available options for `mimic model` are Xserve, PowerBook, PowerMac, Macmini, iMac, MacBook, MacBookPro, MacBookAir, MacPro, MacPro6,1, TimeCapsule, AppleTV1,1 and AirPort.
+    * example value: `key = value`
 
 * __ACCOUNT\_username__
     * multiple variables/accounts possible
@@ -47,6 +47,11 @@ Apple announced to deprecate afp and move to samba.
     * examples
         * "[My Share]; path=/shares/myshare; valid users = alice; invalid users = bob;"
         * "[TimeCapsule Bob]; path=/shares/tc-bob; valid users = bob; vol size limit = 100000; time machine = yes"
+
+* __MODEL__
+    * _optional_ model value of avahi afp service _(get's overwritten by global config)_
+    * _default:_ `TimeCapsule`
+    * some available options are Xserve, PowerBook, PowerMac, Macmini, iMac, MacBook, MacBookPro, MacBookAir, MacPro, MacPro6,1, TimeCapsule, AppleTV1,1 and AirPort.
 
 * __AVAHI\_NAME__
     * _optional_ name of avahi afp service

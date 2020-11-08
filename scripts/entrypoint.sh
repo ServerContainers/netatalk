@@ -16,6 +16,8 @@ INITALIZED="/.initialized"
 if [ ! -f "$INITALIZED" ]; then
   echo ">> CONTAINER: starting initialisation"
 
+  [ -z ${MODEL+x} ] && MODEL="TimeCapsule"
+
   cp /container/config/avahi/afp.service /etc/avahi/services/afp.service
 
   ##
@@ -27,6 +29,7 @@ if [ ! -f "$INITALIZED" ]; then
     echo ">> global config - adding: '$CONF_CONF_VALUE' to /etc/afp.conf"
     sed -i '/\[Global\]/a\  '"$CONF_CONF_VALUE" /etc/afp.conf
   done
+  env | grep 'mimic model' 2>/dev/null >/dev/null || grep 'mimic model' /etc/afp.conf 2>/dev/null >/dev/null || sed -i '/\[Global\]/a\  '"mimic model = $MODEL" /etc/afp.conf
 
   ##
   # USER ACCOUNTS
@@ -66,7 +69,7 @@ if [ ! -f "$INITALIZED" ]; then
         fi
         UUID=$(cat "$VOL_PATH/.netatalk-volume-uuid")
 
-        env | grep mimic 2>/dev/null >/dev/null && MODEL=$(env | grep mimic | sed 's/.*model *= *//g') || MODEL="TimeCapsule"
+        MODEL=$(env | grep mimic | sed 's/.*model *= *//g')
 
         if ! grep '<txt-record>model=' /etc/avahi/services/afp.service 2> /dev/null >/dev/null;
         then
