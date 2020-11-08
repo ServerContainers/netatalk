@@ -4,6 +4,8 @@ netatalk on alpine
 
 ## Changelogs
 
+* 2020-11-08
+    * custom avahi service name
 * 2020-11-05
     * fixed multiarch build
 * 2020-10-17
@@ -45,6 +47,10 @@ Apple announced to deprecate afp and move to samba.
     * examples
         * "[My Share]; path=/shares/myshare; valid users = alice; invalid users = bob;"
         * "[TimeCapsule Bob]; path=/shares/tc-bob; valid users = bob; vol size limit = 100000; time machine = yes"
+
+* __AVAHI\_NAME__
+    * _optional_ name of avahi afp service
+    * _default:_ _hostname_
 
 ### Volumes
 
