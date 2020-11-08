@@ -96,7 +96,7 @@ if [ ! -f "$INITALIZED" ]; then
 
   done
 
-  [ ! -z ${AVAHI_NAME+x} ] && echo ">> ZEROCONF: custom avahi afp.service name: $AVAHI_NAME" && sed 's/%h/'"$AVAHI_NAME"'/g' /etc/avahi/services/afp.service
+  [ ! -z ${AVAHI_NAME+x} ] && echo ">> ZEROCONF: custom avahi afp.service name: $AVAHI_NAME" && sed -i 's/%h/'"$AVAHI_NAME"'/g' /etc/avahi/services/afp.service
 
   echo ">> ZEROCONF: afp.service file"
   echo "############################### START ####################################"
