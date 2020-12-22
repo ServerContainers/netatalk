@@ -4,6 +4,8 @@ netatalk on alpine
 
 ## Changelogs
 
+* 2020-12-22
+    * added support for password hashes instead of just plaintext passwords
 * 2020-11-08
     * custom avahi service name
     * specify avahi model name similar to `servercontainers/samba` config
@@ -35,7 +37,9 @@ Apple announced to deprecate afp and move to samba.
 
 * __ACCOUNT\_username__
     * multiple variables/accounts possible
-    * adds a new user account with the given username and the env value as password
+    * adds a new user account with the given username and the env value as password or password hash
+        * either you add a simple plaintext password as value (can't start with `$.$` or it will be detected as hash)
+        * to add a password hash e.g. `$6$TBPgQoB2kmijMzsi$xdmXI1Z2zIwtuKbLDKjLLvMdWvqRf2cf6aryLJB3pVrIqaEWNH8VOglLIJMYMz6mBSJ5WsLDa5T7i86gmnPAc.` (password: `password`) use normal linux password hash (from `/etc/shadow` etc.)
     * to restrict access of volumes you can add the following to your samba volume config:
         * `valid users = alice; invalid users = bob;`
 

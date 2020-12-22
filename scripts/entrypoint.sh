@@ -40,8 +40,15 @@ if [ ! -f "$INITALIZED" ]; then
     ACCOUNT_PASSWORD=$(echo "$I_ACCOUNT" | sed 's/^[^=]*=//g')
 
     echo ">> ACCOUNT: adding account: $ACCOUNT_NAME"
-    adduser -H -s /bin/false "$ACCOUNT_NAME"
-    echo -e "$ACCOUNT_PASSWORD\n$ACCOUNT_PASSWORD" | passwd "$ACCOUNT_NAME"
+    adduser -D -H -s /bin/false "$ACCOUNT_NAME"
+    if echo "$ACCOUNT_PASSWORD" | grep '^\$.\$' 2>/dev/null >/dev/null
+    then
+      echo "  >> password hash recognized"
+      echo "$ACCOUNT_NAME":"$ACCOUNT_PASSWORD" | chpasswd -e
+    else
+      echo "  >> plain-text password recognized"
+      echo -e "$ACCOUNT_PASSWORD\n$ACCOUNT_PASSWORD" | passwd "$ACCOUNT_NAME"
+    fi
 
     unset $(echo "$I_ACCOUNT" | cut -d'=' -f1)
   done
