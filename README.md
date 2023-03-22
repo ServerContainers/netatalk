@@ -1,4 +1,4 @@
-# netatalk - (ghcr.io/servercontainers/netatalk) [x86 + arm]
+# netatalk - (ghcr.io/servercontainers/netatalk) (+ optional zeroconf) on alpine [x86 + arm]
 
 netatalk on alpine
 
