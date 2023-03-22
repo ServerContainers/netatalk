@@ -5,9 +5,18 @@ export IFS=$'\n'
 cat <<EOF
 ################################################################################
 
-Welcome to the servercontainers/netatalk
+Welcome to the ghcr.io/servercontainers/netatalk
 
 ################################################################################
+
+You'll find this container sourcecode here:
+
+    https://github.com/ServerContainers/netatalk
+
+The container repository will be updated regularly.
+
+################################################################################
+
 
 EOF
 

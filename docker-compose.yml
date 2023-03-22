@@ -2,7 +2,8 @@ version: '3'
  
 services:
   netatalk:
-    image: servercontainers/netatalk
+    build: .
+    image: ghcr.io/servercontainers/netatalk
     restart: always
     network_mode: host
     environment:

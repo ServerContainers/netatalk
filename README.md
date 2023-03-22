@@ -1,14 +1,28 @@
-# netatalk - (servercontainers/netatalk) [x86 + arm]
+# netatalk - (ghcr.io/servercontainers/netatalk) [x86 + arm]
 
 netatalk on alpine
 
+## Build & Versioning
+
+You can specify `DOCKER_REGISTRY` environment variable (for example `my.registry.tld`)
+and use the build script to build the main container and it's variants for _x86_64, arm64 and arm_
+
+You'll find all images tagged like `a3.15.0-n3.1.13-r1` which means `a<alpine version>-n<netatalk version>`.
+This way you can pin your installation/configuration to a certian version. or easily roll back if you experience any problems
+(don't forget to open a issue in that case ;D).
+
+To build a `latest` tag run `./build.sh release`
+
 ## Changelogs
 
+* 2023-03-20
+    * github action to build container
+    * implemented ghcr.io as new registry
 * 2020-12-22
     * added support for password hashes instead of just plaintext passwords
 * 2020-11-08
     * custom avahi service name
-    * specify avahi model name similar to `servercontainers/samba` config
+    * specify avahi model name similar to `ghcr.io/servercontainers/samba` config
 * 2020-11-05
     * fixed multiarch build
 * 2020-10-17
