@@ -21,10 +21,21 @@ env:
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
+  IMAGE_PLATFORMS: linux/amd64,linux/arm64,linux/arm/v7,linux/arm/v6
 
 
 jobs:
+  # gate: don't build or publish anything unless the tests pass
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+      - name: Run tests
+        run: ./test.sh
+
   build:
+    needs: test
 
     runs-on: ubuntu-latest
     permissions:
@@ -36,20 +47,25 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install Cosign
         uses: sigstore/cosign-installer@v3.5.0
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v4
+        with:
+          platforms: ${{ env.IMAGE_PLATFORMS }}
+
       # Workaround: https://github.com/docker/build-push-action/issues/461
       - name: Setup Docker buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
 
       # Login against a Docker registry except on PR
       # https://github.com/docker/login-action
       - name: Log into registry ${{ env.REGISTRY }}
         if: github.event_name != 'pull_request'
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
@@ -59,12 +75,16 @@ jobs:
       # https://github.com/docker/metadata-action
       - name: Extract Docker metadata
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: Extract Docker Version Tag
-        id: docker_version_tag          
+        id: docker_version_tag
+        env:
+          # rebuild on code changes (push / manual run); only the nightly
+          # schedule dedups on the version tag to skip identical rebuilds
+          FORCE_REBUILD: ${{ github.event_name != 'schedule' && '1' || '' }}
         run: |
           ./get-version.sh $(echo "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:" | tr '[:upper:]' '[:lower:]') | sed 's/^/tag=/g' >> $GITHUB_OUTPUT
 
@@ -77,12 +97,12 @@ jobs:
       - name: Build and push Docker image with tag
         if: ${{ !endsWith(steps.docker_version_tag.outputs.tag, 'latest') }}
         id: build-and-push-tagged
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v7
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.docker_version_tag.outputs.tag }}
-          platforms: linux/amd64,linux/arm64,linux/arm/v7,linux/arm/v6
+          platforms: ${{ env.IMAGE_PLATFORMS }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
@@ -100,7 +120,7 @@ jobs:
 
       - name: Build Docker Latest Tag
         if: ${{ !endsWith(steps.docker_version_tag.outputs.tag, 'latest') }}
-        id: docker_latest_tag          
+        id: docker_latest_tag
         run: |
           echo "tag=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest" | tr '[:upper:]' '[:lower:]' >> $GITHUB_OUTPUT
 
@@ -109,12 +129,12 @@ jobs:
       - name: Build and push Docker image as latest
         if: ${{ !endsWith(steps.docker_version_tag.outputs.tag, 'latest') }}
         id: build-and-push-latest
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v7
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.docker_latest_tag.outputs.tag }}
-          platforms: linux/amd64,linux/arm64,linux/arm/v7,linux/arm/v6
+          platforms: ${{ env.IMAGE_PLATFORMS }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
